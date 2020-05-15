@@ -4,12 +4,14 @@ import { caesar13 } from "./caesar13";
 
 function App() {
   const [encryptedMessage, setEncryptedMessage] = useState("");
+  const [haveNotEncryptedChars, setHaveNotEncryptedChars] = useState(false);
   const [copyButtonValue, setCopyButtonValue] = useState(
     "Copy text to clipboard"
   );
 
   const handleSentenceInputChange = (e) => {
-    setEncryptedMessage(caesar13(e.target.value));
+    setEncryptedMessage(caesar13(e.target.value)[0]);
+    setHaveNotEncryptedChars(caesar13(e.target.value)[1]);
   };
 
   const handleCopyTextToClipboard = () => {
@@ -27,11 +29,17 @@ function App() {
         src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Enigma_rotor_set.png"
         alt="Enigma rotor set"
         height="200"
+        style={{ marginBottom: "20px", display: "inline" }}
       ></img>
-      <br />
-      <br />
-      <label htmlFor="sentence">Enter sentence to code:</label>
-      <br />
+      <label
+        htmlFor="sentence"
+        style={{
+          marginTop: "20px",
+          display: "block",
+        }}
+      >
+        Enter sentence to encrypt:
+      </label>
       <input
         type="text"
         id="sentence"
@@ -39,11 +47,23 @@ function App() {
         onChange={handleSentenceInputChange}
         style={{ width: "20em" }}
       />
-      <br />
-      <br />
-      <br />
-      <label htmlFor="codedSentence">Coded sentence:</label>
-      <br />
+      {haveNotEncryptedChars ? (
+        <p style={{ color: "red" }}>
+          The encryptor only encrypts the letters of the Latin alphabet.
+          <br /> Other characters will not be encrypted!
+        </p>
+      ) : (
+        <br />
+      )}
+      <label
+        htmlFor="codedSentence"
+        style={{
+          marginTop: "20px",
+          display: "block",
+        }}
+      >
+        Encrypted sentence:
+      </label>
       <input
         type="text"
         id="codedSentence"
@@ -53,7 +73,13 @@ function App() {
         style={{ width: "20em" }}
       />
       <br />
-      <button type="button" onClick={handleCopyTextToClipboard}>
+      <button
+        type="button"
+        onClick={handleCopyTextToClipboard}
+        style={{
+          marginTop: "5px",
+        }}
+      >
         {copyButtonValue}
       </button>
     </div>

@@ -4,6 +4,7 @@ export const caesar13 = (sentence) => {
   const minBigCharCode = 65; //A
   const maxBigCharCode = 90; //Z
   let codedSentence = "";
+  let notEncryptableCharDetected = false;
 
   for (let charIndex = 0; charIndex < sentence.length; charIndex++) {
     const charCode = sentence.charCodeAt(charIndex);
@@ -23,8 +24,9 @@ export const caesar13 = (sentence) => {
     //Jeżeli inny znak to brak modyfikacji
     else {
       codedSentence += sentence[charIndex];
+      notEncryptableCharDetected = true
     }
   }
 
-  return codedSentence;
+  return [codedSentence, notEncryptableCharDetected];
 };
